@@ -15,13 +15,14 @@
 //     return view('home');
 // });
 
-Route::view('/', 'home')->name('home');
+// Route::view('/', 'home')->name('home');
+Route::get('/', 'HomeController@home')->name('home');
 
 // Route::get('/contact', function() {
 //     return view('contact');
 // });
 
-Route::view('/contact', 'contact')->name('contact');
+Route::get('/contact', 'HomeController@contact')->name('contact');
 
 Route::get('/blog-post/{id}/{welcome?}', function ($id, $welcome = 1) {
     $pages = [
