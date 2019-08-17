@@ -9,4 +9,4 @@
     @if ((new Carbon\Carbon())->diffInMinutes($post->created_at) < 5)
         <strong>New post!</strong>
     @endif
-@endsectio
+@endsection
