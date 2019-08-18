@@ -40,13 +40,7 @@ class PostController extends Controller
         // bail|  (Stops validating after the first rule fails)
         $validatedData = $request->validated();
 
-        dd($validatedData);
-
-        $blogPost = new BlogPost();
-        $blogPost->title = $request->input('title');
-        $blogPost->content = $request->input('content');
-        $blogPost->save();
-
+        $blogPost = BlogPost::create($validatedData);
         $request->session()->flash('status', 'Blog post was created!');
 
         return redirect()->route('posts.show', ['post' => $blogPost->id]);
