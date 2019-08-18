@@ -24,8 +24,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show($id)
     {
+        // Request $request, <= argument
         // $request->session()->reflash();
         return view('posts.show', ['post' => BlogPost::findOrFail($id)]);
     }
@@ -44,5 +45,17 @@ class PostController extends Controller
         $request->session()->flash('status', 'Blog post was created!');
 
         return redirect()->route('posts.show', ['post' => $blogPost->id]);
+    }
+
+    public function edit($id)
+    {
+        $post = BlogPost::findOrFail($id);
+
+        return view('posts.edit', ['post' => $post]);
+    }
+
+    public function update()
+    {
+        return view('posts.update');
     }
 }

@@ -8,12 +8,12 @@
         </p>
     @endforeach --}}
     @forelse ($posts as $post)
-        <p>
+        <div style="background-color: grey; border: 1px solid black; padding: 5px; margin: 10px;">
             <h3>
                 <a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}</a>
             </h3>
-            {{ $post->content }}
-        </p>
+            <a href="{{ route('posts.edit', ['post' => $post->id]) }}">Edit</a>
+        </div>
     @empty
         <p>No blog posts yet</p>
     @endforelse
