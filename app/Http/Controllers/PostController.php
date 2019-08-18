@@ -36,9 +36,10 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+        // bail|  (Stops validating after the first rule fails)
         $validatedData = $request->validate([
             'title' => 'required|max:100',
-            'content' => 'required'
+            'content' => 'required|min:10'
         ]);
 
         $blogPost = new BlogPost();
