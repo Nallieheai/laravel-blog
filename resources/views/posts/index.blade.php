@@ -8,15 +8,15 @@
         </p>
     @endforeach --}}
     @forelse ($posts as $post)
-        <div style="background-color: grey; border: 1px solid black; padding: 5px; margin: 10px;">
+        <div>
             <h3>
                 <a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}</a>
             </h3>
-            <a href="{{ route('posts.edit', ['post' => $post->id]) }}">Edit</a>
-            <form method="POST" action="{{ route('posts.destroy', ['post' => $post->id]) }}">
+            <a class="btn btn-primary" href="{{ route('posts.edit', ['post' => $post->id]) }}">Edit</a>
+            <form class="fm-inline" method="POST" action="{{ route('posts.destroy', ['post' => $post->id]) }}">
                 @csrf
                 @method('DELETE')
-                <input type="submit" value="Delete!" />
+                <input type="submit" value="Delete!" class="btn btn-danger"/>
             </form>
         </div>
     @empty
