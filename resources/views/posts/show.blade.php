@@ -9,4 +9,16 @@
     @if ((new Carbon\Carbon())->diffInMinutes($post->created_at) < 5)
         <strong>New post!</strong>
     @endif
+
+    <h4>Comments</h4>
+    @forelse ($post->comments as $comment)
+        <div class="card">
+            <div class="card-body">
+                <p>{{ $comment->content }}</p>
+                <em class="text-muted">Added {{ $comment->created_at->diffForHumans() }}</em>
+            </div>
+        </div>
+    @empty
+        <p>No comments yet!</p>
+    @endforelse
 @endsection

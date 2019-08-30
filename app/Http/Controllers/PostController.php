@@ -17,34 +17,6 @@ class PostController extends Controller
      */
     public function index()
     {
-        /*
-         * Lazy loading
-        DB::connection()->enableQueryLog();
-
-        $posts = BlogPost::all();
-
-        foreach ($posts as $post) {
-            foreach ($post->comments as $comment) {
-                echo $comment->content;
-            }
-        }
-        dd(DB::getQueryLog());
-        */
-        // VS
-        /*
-         * Eager loading
-        DB::connection()->enableQueryLog();
-
-        $posts = BlogPost::with('comments')->get();
-
-        foreach ($posts as $post) {
-            foreach ($post->comments as $comment) {
-                echo $comment->content;
-            }
-        }
-        dd(DB::getQueryLog());
-        */
-
         // comments_count
         return view('posts.index', ['posts' => BlogPost::withCount('comments')->get()]);
     }
@@ -59,7 +31,7 @@ class PostController extends Controller
     {
         // Request $request, <= argument
         // $request->session()->reflash();
-        return view('posts.show', ['post' => BlogPost::findOrFail($id)]);
+        return view('posts.show', ['post' => BlogPost::with('comments')->findOrFail($id)]);
     }
 
     public function create()
