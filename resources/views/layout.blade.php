@@ -22,7 +22,7 @@
             @else
                 <a class="p-2 text-dark" href="{{ route('posts.create') }}">Add Blog Post</a>
                 <a class="p-2 text-dark" href="{{ route('logout') }}"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout ({{ Auth::user()->name }})</a>
                 
                 <form action="{{ route('logout') }}" method="POST" id="logout-form" style="display:none">
                     @csrf
