@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,7 +13,19 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
 
-        factory(App\User::class)->states('john-doe')->create();
-        factory(App\User::class, 20)->create();
+        $doe = factory(App\User::class)->states('john-doe')->create();
+        $others = factory(App\User::class, 20)->create();
+
+        $users = $others->concat([$doe]);
+        
+        $posts = factory(App\BlogPost::class, 50)->make()->each(function($post) use ($users) {
+            $post->user_id = $users->random()->id;
+            $post->save();
+        });
+
+        $comments = factory(App\Comment::class, 150)->make()->each(function($comment) use ($posts) {
+            $comment->blog_post_id = $posts->random()->id;
+            $comment->save();
+        });
     }
 }
