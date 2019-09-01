@@ -66,10 +66,10 @@ class PostController extends Controller
     public function update(StorePost $request, $id)
     {
         $post = BlogPost::findOrFail($id);
-        if (Gate::denies('update-post', $post)) {
-            abort(403, "You can't edit this blog post!");
-        }
 
+        if (Gate::denies('update-post', $post)) 
+            abort(403, "You can't edit this blog post!");
+        
         $validatedData = $request->validated();
 
         $post->fill($validatedData);
@@ -82,6 +82,10 @@ class PostController extends Controller
     public function destroy(Request $request, $id)
     {
         $post = BlogPost::findOrFail($id);
+
+        if (Gate::denies('delete-post', $post)) 
+            abort(403, "You can't delete this blog post!");
+
         $post->delete();
         // BlogPost::destroy($id);
 
