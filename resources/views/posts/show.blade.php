@@ -4,7 +4,7 @@
     <h1>{{ $post->title }}</h1>
     <p>{{ $post->content }}</p>
 
-    <p>{{ $post->created_at->diffForHumans() }}</p>
+    <p class="text-muted">{{ $post->created_at->diffForHumans() }}  by {{ $post->user->name }}</p>
 
     @if ((new Carbon\Carbon())->diffInMinutes($post->created_at) < 5)
         <strong>New post!</strong>
@@ -15,7 +15,7 @@
         <div class="card">
             <div class="card-body">
                 <p>{{ $comment->content }}</p>
-                <em class="text-muted">Added {{ $comment->created_at->diffForHumans() }} by {{ $post->user->name }}</em>
+                <em class="text-muted">Added {{ $comment->created_at->diffForHumans() }}</em>
             </div>
         </div>
     @empty
