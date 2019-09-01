@@ -11,21 +11,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
-
-        $doe = factory(App\User::class)->states('john-doe')->create();
-        $others = factory(App\User::class, 20)->create();
-
-        $users = $others->concat([$doe]);
-        
-        $posts = factory(App\BlogPost::class, 50)->make()->each(function($post) use ($users) {
-            $post->user_id = $users->random()->id;
-            $post->save();
-        });
-
-        $comments = factory(App\Comment::class, 150)->make()->each(function($comment) use ($posts) {
-            $comment->blog_post_id = $posts->random()->id;
-            $comment->save();
-        });
+        /*
+         *  When adding new seeder classes they have to be refreshed by using
+         *  "composer dump-autoload"
+         *  before "php artisan migrate:refresh --seed" can be run again.
+         *  
+         *  One seeder can be run induvidually by using "php artisan db:seed --class=classname"
+         *  ^ example classname: UsersTableSeeder
+         */
+        $this->call([
+            UsersTableSeeder::class,
+            BlogPostsTableSeeder::class,
+            CommentsTableSeeder::class
+        ]);
     }
 }
