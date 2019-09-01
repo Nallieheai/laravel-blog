@@ -11,6 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        if ($this->command->confirm('Do you want to refresh the database?')) {
+            $this->command->call("migrate:refresh");
+            $this->command->info("Database was refreshed successfully");
+        }
+
         /*
          *  When adding new seeder classes they have to be refreshed by using
          *  "composer dump-autoload"
