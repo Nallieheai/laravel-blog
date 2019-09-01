@@ -15,7 +15,7 @@
         <div class="card">
             <div class="card-body">
                 <p>{{ $comment->content }}</p>
-                <em class="text-muted">Added {{ $comment->created_at->diffForHumans() }}</em>
+                <em class="text-muted">Added {{ $comment->created_at->diffForHumans() }} by {{ $post->user->name }}</em>
             </div>
         </div>
     @empty
