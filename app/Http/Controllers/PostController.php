@@ -8,6 +8,17 @@ use App\Http\Requests\StorePost;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
+// Laravel can figure out which policy to use when using "authorize()"
+// because of the method names defined.
+//     'method name' => 'policy to use'
+// [
+//     'show' => 'view',
+//     'create' => 'create',
+//     'store' => 'create',
+//     'edit' => 'update',
+//     'update' => 'update',
+//     'destroy' => 'delete'
+// ]
 
 class PostController extends Controller
 {
@@ -50,7 +61,6 @@ class PostController extends Controller
     {
         // bail|  (Stops validating after the first rule fails)
         $validatedData = $request->validated();
-
         $blogPost = BlogPost::create($validatedData);
         $request->session()->flash('status', 'Blog post was created!');
 
@@ -60,6 +70,7 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = BlogPost::findOrFail($id);
+        $this->authorize($post);
 
         return view('posts.edit', ['post' => $post]);
     }
@@ -67,8 +78,7 @@ class PostController extends Controller
     public function update(StorePost $request, $id)
     {
         $post = BlogPost::findOrFail($id);
-
-        $this->authorize('posts.update', $post);
+        $this->authorize($post);
         
         $validatedData = $request->validated();
 
@@ -83,7 +93,7 @@ class PostController extends Controller
     {
         $post = BlogPost::findOrFail($id);
 
-        $this->authorize('posts.delete', $post);
+        $this->authorize($post);
 
         $post->delete();
         // BlogPost::destroy($id);
