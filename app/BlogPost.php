@@ -10,7 +10,7 @@ class BlogPost extends Model
     // protected $table = 'blog_posts';
     use SoftDeletes;
 
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['title', 'content', 'user_id'];
 
     public function comments()
     {

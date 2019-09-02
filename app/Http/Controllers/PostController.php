@@ -61,6 +61,7 @@ class PostController extends Controller
     {
         // bail|  (Stops validating after the first rule fails)
         $validatedData = $request->validated();
+        $validatedData['user_id'] = $request->user()->id;
         $blogPost = BlogPost::create($validatedData);
         $request->session()->flash('status', 'Blog post was created!');
 
