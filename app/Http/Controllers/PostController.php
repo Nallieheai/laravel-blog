@@ -42,6 +42,7 @@ class PostController extends Controller
 
     public function create()
     {
+        // $this->authorize('posts.create');
         return view('posts.create');
     }
 
@@ -67,7 +68,7 @@ class PostController extends Controller
     {
         $post = BlogPost::findOrFail($id);
 
-        $this->authorize('update-post', $post);
+        $this->authorize('posts.update', $post);
         
         $validatedData = $request->validated();
 
@@ -82,7 +83,7 @@ class PostController extends Controller
     {
         $post = BlogPost::findOrFail($id);
 
-        $this->authorize('delete-post', $post);
+        $this->authorize('posts.delete', $post);
 
         $post->delete();
         // BlogPost::destroy($id);

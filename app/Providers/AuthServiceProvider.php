@@ -25,21 +25,19 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::before(function ($user, $ability) {
-            if ($user->is_admin && in_array($ability, ['update-post']))
-                return true;
-        });
+        // Gate::before(function ($user, $ability) {
+        //     if ($user->is_admin && in_array($ability, ['posts.update']))
+        //         return true;
+        // });
 
         // Gate::after(function ($user, $ability, $result) {
         //     // This can perform an action afterwards.
         // });
 
-        Gate::define('update-post', function ($user, $post) {
-            return $user->id === $post->user_id;
-        });
+        // Gate::define('posts.update', 'App\Policies\BlogPostPolicy@update');
+        // Gate::define('posts.delete', 'App\Policies\BlogPostPolicy@delete');
 
-        Gate::define('delete-post', function ($user, $post) {
-            return $user->id === $post->user_id;
-        });
+        Gate::resource('posts', 'App\Policies\BlogPostPolicy');
+        // defines all routes
     }
 }
