@@ -14,13 +14,22 @@
                 @else
                     <p>No comments yet!</p>
                 @endif
-    
-                <a class="btn btn-primary" href="{{ route('posts.edit', ['post' => $post->id]) }}">Edit</a>
-                <form class="fm-inline" method="POST" action="{{ route('posts.destroy', ['post' => $post->id]) }}">
-                    @csrf
-                    @method('DELETE')
-                    <input type="submit" value="Delete!" class="btn btn-danger"/>
-                </form>
+
+                @can('update', $post)
+                    <a class="btn btn-primary" href="{{ route('posts.edit', ['post' => $post->id]) }}">Edit</a>
+                @endcan
+
+                {{-- @cannot('update')
+                    <p>You can't edit this post!</p>
+                @endcannot --}}
+
+                @can('delete', $post)
+                    <form class="fm-inline" method="POST" action="{{ route('posts.destroy', ['post' => $post->id]) }}">
+                        @csrf
+                        @method('DELETE')
+                        <input type="submit" value="Delete!" class="btn btn-danger"/>
+                    </form>
+                @endcan
             </div>
         </div>
     @empty
