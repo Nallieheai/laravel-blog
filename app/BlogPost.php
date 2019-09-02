@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\LatestScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -27,6 +28,8 @@ class BlogPost extends Model
         // ->forceDelete(); will delete the blog post no matter what.
 
         parent::boot();
+
+        static::addGlobalScope(new LatestScope);
 
         static::deleting(function (BlogPost $blogPost) {
             $blogPost->comments()->delete();
