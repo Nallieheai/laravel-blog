@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-8">
         @forelse ($posts as $post)
-        <div class="card" style="margin-bottom: 10px;">
+        <div class="card mb-2">
             <div class="card-body">
                 <h3>
                     <a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}</a>
@@ -39,18 +39,37 @@
         @endforelse
     </div>
     <div class="col-4">
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Most commented</h5>
-                <p class="card-text">What people are currently talking about</p>
+        <div class="container">
+            <div class="row">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Most commented</h5>
+                        <p class="card-text">What people are currently talking about</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        @foreach ($mostCommented as $post)
+                        <li class="list-group-item">
+                            <a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}
+                                ({{ $post->comments_count }})</a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
-            <ul class="list-group list-group-flush">
-                @foreach ($mostCommented as $post)
-                <li class="list-group-item">
-                    <a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }} ({{ $post->comments_count }})</a>
-                </li>
-                @endforeach
-            </ul>
+
+            <div class="row mt-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Most active users</h5>
+                        <p class="card-text">The users that post the most</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        @foreach ($mostActive as $user)
+                        <li class="list-group-item">{{ $user->name }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
