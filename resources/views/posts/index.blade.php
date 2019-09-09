@@ -47,51 +47,33 @@
         <p>No blog posts yet</p>
         @endforelse
     </div>
+    
     <div class="col-4">
         <div class="container">
             <div class="row">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Most commented</h5>
-                        <p class="card-text">What people are currently talking about</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
+                @card(['title' => 'Most active posts', 'subtitle' => 'What people are talking about!'])
+                    @slot('items')
                         @foreach ($mostCommented as $post)
-                        <li class="list-group-item">
-                            <a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}
-                                ({{ $post->comments_count }})</a>
-                        </li>
+                            <li class="list-group-item">
+                                <a href="{{ route('posts.show', ['post' => $post->id]) }}">
+                                    {{ $post->title }}
+                                </a>
+                            </li>
                         @endforeach
-                    </ul>
-                </div>
+                    @endslot
+                @endcard
             </div>
 
             <div class="row mt-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Most active users</h5>
-                        <p class="card-text">The users that post the most</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        @foreach ($mostActive as $user)
-                        <li class="list-group-item">{{ $user->name }} ({{ $user->blog_posts_count }})</li>
-                        @endforeach
-                    </ul>
-                </div>
+                @card(['title' => 'Most active users', 'subtitle' => 'The user that post the most'])
+                    @slot('items', collect($mostActive)->pluck('name'))
+                @endcard
             </div>
-
+            
             <div class="row mt-4">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">Most active last month</h5>
-                        <p class="card-text">The users that posted the most last month</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        @foreach ($mostActiveLastMonth as $user)
-                        <li class="list-group-item">{{ $user->name }} ({{ $user->blog_posts_count }})</li>
-                        @endforeach
-                    </ul>
-                </div>
+                @card(['title' => 'Most active last month', 'subtitle' => 'The users that posted the most last month'])
+                    @slot('items', collect($mostActiveLastMonth)->pluck('name'))
+                @endcard
             </div>
         </div>
     </div>
