@@ -47,7 +47,7 @@
             <ul class="list-group list-group-flush">
                 @foreach ($mostCommented as $post)
                 <li class="list-group-item">
-                    <a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}</a>
+                    <a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }} ({{ $post->comments_count }})</a>
                 </li>
                 @endforeach
             </ul>
