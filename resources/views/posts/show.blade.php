@@ -9,17 +9,19 @@
 </h1>
 
 <p>{{ $post->content }}</p>
-
-<p class="text-muted">{{ $post->created_at->diffForHumans() }} by {{ $post->user->name }}</p>
-
-
+@updated(['date' => $post->created_at, 'name' => $post->user->name])
+@endupdated
+@updated(['date' => $post->updated_at])
+Updated
+@endupdated
 
 <h4>Comments</h4>
 @forelse ($post->comments as $comment)
 <div class="card">
     <div class="card-body">
         <p>{{ $comment->content }}</p>
-        <em class="text-muted">Added {{ $comment->created_at->diffForHumans() }}</em>
+        @updated(['date' => $comment->created_at])
+        @endupdated
     </div>
 </div>
 @empty

@@ -16,7 +16,8 @@
                         </del>
                     @endif
                 </h3>
-                <em class="text-muted">Added {{ $post->created_at->diffForHumans() }} by {{ $post->user->name }}</em>
+                @updated(['date' => $post->created_at, 'name' => $post->user->name])
+                @endupdated
 
                 @if($post->comments_count)
                 <p>{{ $post->comments_count }} comments!</p>
