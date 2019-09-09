@@ -65,7 +65,21 @@
                     </div>
                     <ul class="list-group list-group-flush">
                         @foreach ($mostActive as $user)
-                        <li class="list-group-item">{{ $user->name }}</li>
+                        <li class="list-group-item">{{ $user->name }} ({{ $user->blog_posts_count }})</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Most active last month</h5>
+                        <p class="card-text">The users that posted the most last month</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        @foreach ($mostActiveLastMonth as $user)
+                        <li class="list-group-item">{{ $user->name }} ({{ $user->blog_posts_count }})</li>
                         @endforeach
                     </ul>
                 </div>
