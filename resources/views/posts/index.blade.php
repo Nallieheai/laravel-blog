@@ -6,8 +6,15 @@
         @forelse ($posts as $post)
         <div class="card mb-2">
             <div class="card-body">
+
                 <h3>
-                    <a href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}</a>
+                    @if ($post->trashed())
+                        <del>
+                    @endif
+                    <a class="{{ $post->trashed() ? 'text-muted' : '' }}" href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}</a>
+                    @if ($post->trashed())
+                        </del>
+                    @endif
                 </h3>
                 <em class="text-muted">Added {{ $post->created_at->diffForHumans() }} by {{ $post->user->name }}</em>
 
@@ -18,20 +25,21 @@
                 @endif
 
                 @can('update', $post)
-                <a class="btn btn-primary" href="{{ route('posts.edit', ['post' => $post->id]) }}">Edit</a>
+                <a class="btn btn-sm btn-primary" href="{{ route('posts.edit', ['post' => $post->id]) }}">Edit</a>
                 @endcan
 
                 {{-- @cannot('update')
                     <p>You can't edit this post!</p>
                 @endcannot --}}
-
+                @if (!$post->trashed())
                 @can('delete', $post)
                 <form class="fm-inline" method="POST" action="{{ route('posts.destroy', ['post' => $post->id]) }}">
                     @csrf
                     @method('DELETE')
-                    <input type="submit" value="Delete!" class="btn btn-danger" />
+                    <input type="submit" value="Delete!" class="btn btn-sm btn-danger" />
                 </form>
                 @endcan
+                @endif
             </div>
         </div>
         @empty

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Scopes\DeletedAdminScope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -37,7 +38,7 @@ class BlogPost extends Model
     public static function boot()
     {
         // ->forceDelete(); will delete the blog post no matter what.
-
+        static::addGlobalScope(new DeletedAdminScope);
         parent::boot();
 
         // static::addGlobalScope(new LatestScope);
