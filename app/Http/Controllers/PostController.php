@@ -6,9 +6,7 @@ use App\BlogPost;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePost;
-
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Cache;
 
 // Laravel can figure out which policy to use when using "authorize()"
 // because of the method names defined.
@@ -36,12 +34,28 @@ class PostController extends Controller
      */
     public function index()
     {
+        // Time in minutes
+        $cachedTime = 60;
+
+        $mostCommented = Cache::remember('mostCommented', $cachedTime, function () {
+            return BlogPost::mostCommented()->take(5)->get();
+        });
+
+        $mostActive = Cache::remember('mostActive', $cachedTime, function () {
+            return User::withMostBlogPosts()->take(5)->get();
+        });
+
+        $mostActiveLastMonth = Cache::remember('mostActiveLastMonth', $cachedTime, function () {
+            return User::withMostBlogPostsLastMonth()->take(5)->get();
+        });
+        
+
         // comments_count
         return view('posts.index', [
             'posts' => BlogPost::latest()->withCount('comments')->with('user')->get(),
-            'mostCommented' => BlogPost::mostCommented()->take(5)->get(),
-            'mostActive' => User::withMostBlogPosts()->take(5)->get(),
-            'mostActiveLastMonth' => User::withMostBlogPostsLastMonth()->take(5)->get()
+            'mostCommented' => $mostCommented,
+            'mostActive' => $mostActive,
+            'mostActiveLastMonth' => $mostActiveLastMonth
         ]);
     }
 
