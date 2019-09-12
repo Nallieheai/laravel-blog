@@ -72,11 +72,17 @@ class PostController extends Controller
         // return view('posts.show', ['post' => BlogPost::with(['comments' => function($query) {
         //     return $query->latest();
         // }])->findOrFail($id)]);
+        
         $blogPost = Cache::remember("blog-post-{$id}", 60, function() use($id) {
             return BlogPost::with('comments')->findOrFail($id);
         });
 
-        return view('posts.show', ['post' => $blogPost]);
+        $counter = 0;
+
+        return view('posts.show', [
+            'post' => $blogPost,
+            'counter' => $counter
+        ]);
     }
 
     public function create()
