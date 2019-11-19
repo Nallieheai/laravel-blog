@@ -14,6 +14,10 @@
 @updated(['date' => $post->updated_at])
 Updated
 @endupdated
+
+@tags(['tags' => $post->tags])
+@endtags
+
 <p>Currently read by {{ $counter }} people!</p>
 
 <h4>Comments</h4>
